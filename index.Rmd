@@ -1,0 +1,108 @@
+---
+title       : Playing with Exponentially Distributed Data and the Central Limit Theorem
+subtitle    : Building Data Products - Project
+author      : Jonathan Hines
+job         : Coursera Data Science
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## The Central Limit Theorum is Fun!
+
+The central limit theorem (CLT) allows us to make estimates of statistical properties
+of a popluation based on samples from that population.  It states that if you take
+subsets of a population of data.  The means of that subsets will be distributed in
+a normal distribution around the mean of the popluation with a standard deviation
+equal to the standard error.  That is:
+
+$$\mu\left(\bar{x}\right) = \mu$$
+
+and:
+
+$$\sigma\left(\bar{x}\right) = \frac{\sigma}{\sqrt{n}}$$
+
+
+--- .paragraph-page #page1 
+
+## Seeing is Believeing
+
+My app explores the CLT by simulating an exponentially distributed dataset and then
+taking samples of that set and calculating the mean and standard deviation of the
+sample means in a similar way to the analysis performed in the Coursera Data Science
+Specialization - Statistical Inference course project.  Users are allowed to change
+the parameters of:
+
+1. $\lambda$ (the inverse of the ditribution mean)
+2. Population
+3. Sample Count
+4. Sample Size
+
+By changing the values in the system a user can learn about how the central limit
+theorem converges to gaussian distributions, even if the data is not in a gaussian 
+distribution!
+
+--- 
+
+## Build a Polulation
+
+```{r echo=FALSE}
+set.seed(123123)
+```
+```{r}
+lambda <- 0.2
+poplutaion.count <- 1000
+subsample.count <- 1000
+subsample.size <- 40
+vals <- data.frame(X = rexp(poplutaion.count,lambda));
+```
+
+```{r echo=FALSE, out.width=300, out.height=300}
+library(ggplot2)
+ggplot(data=vals, aes(x=X) ) +
+          geom_histogram(color="black",binwidth=1.5, fill="blue",aes( y = ..density..), alpha = .2) +
+          xlab("Value") +
+          ylab("Density") +
+          ggtitle("Population Distribution")
+```
+
+--- 
+
+## Check the Central Limit Theorem
+
+Give a set of parameters the application will generate a histogram of means of 
+subsets of the data and will super-impose the CLT predicted normal curve and a 
+normal curve fit to the distribution of the sample means for graphical comparison.
+Don't take my word for it, [try it for yourself](https://jonathanhines-coursera.shinyapps.io/project/)!
+
+```{r echo=FALSE, out.width=380, out.height=380}
+library(ggplot2)
+dat <- data.frame(mns=mns,sds=sds)
+mnsmn <- mean(mns)
+mnssd <- sd(mns)
+mnsvar <- var(mns)
+sdsmn <- mean(sds)
+variancesmn <- mean(variances)
+mnssd_theory <- 1/(lambda*sqrt(40))
+mnsvar_theory <- mnssd_theory^2
+# Distribution Plot
+g <- ggplot(data=dat, aes(x=mns) ) +
+  geom_histogram(color="black", fill="blue",binwidth=.3,aes( y = ..density..), alpha = .2) +
+  xlab("X") +
+  ylab("Density") +
+  ggtitle("Distribution of means from the exponential distribution") +
+  stat_function(fun = dnorm, args = list(mean = 1/lambda, sd = (1/lambda)/sqrt(40)),aes(color="red")) +
+  stat_function(fun = dnorm, args = list(mean = mnsmn, sd = mnssd), aes(color="blue")) +
+  geom_vline(xintercept=c(1/lambda + ((1/lambda)/sqrt(40)) * c(-3,-2,-1,0,1,2,3)), linetype="dashed", color="red") +
+  geom_vline(xintercept=mnsmn + mnssd * c(-3,-2,-1,0,1,2,3), linetype="dashed", color="blue") +
+  scale_color_manual(
+    name="Legend", 
+    values = c("blue", "red", "blue","red"), 
+    labels = c("Sample Normal Distribution", "CLT Normal Distribution" )
+  ) + 
+  theme(legend.position="bottom",legend.title=element_blank())
+g
+```

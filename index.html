@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playing with Exponentially Distributed Data and the Central Limit Theorem</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Playing with Exponentially Distributed Data and the Central Limit Theorem">
+  <meta name="author" content="Jonathan Hines">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Playing with Exponentially Distributed Data and the Central Limit Theorem</h1>
+    <h2>Building Data Products - Project</h2>
+    <p>Jonathan Hines<br/>Coursera Data Science</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>The Central Limit Theorum is Fun!</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The central limit theorem (CLT) allows us to make estimates of statistical properties
+of a popluation based on samples from that population.  It states that if you take
+subsets of a population of data.  The means of that subsets will be distributed in
+a normal distribution around the mean of the popluation with a standard deviation
+equal to the standard error.  That is:</p>
+
+<p>\[\mu\left(\bar{x}\right) = \mu\]</p>
+
+<p>and:</p>
+
+<p>\[\sigma\left(\bar{x}\right) = \frac{\sigma}{\sqrt{n}}\]</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="paragraph-page" id="page1" style="background:;">
+  <hgroup>
+    <h2>Seeing is Believeing</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>My app explores the CLT by simulating an exponentially distributed dataset and then
+taking samples of that set and calculating the mean and standard deviation of the
+sample means in a similar way to the analysis performed in the Coursera Data Science
+Specialization - Statistical Inference course project.  Users are allowed to change
+the parameters of:</p>
+
+<ol>
+<li>\(\lambda\) (the inverse of the ditribution mean)</li>
+<li>Population</li>
+<li>Sample Count</li>
+<li>Sample Size</li>
+</ol>
+
+<p>By changing the values in the system a user can learn about how the central limit
+theorem converges to gaussian distributions, even if the data is not in a gaussian 
+distribution!</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Build a Polulation</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">lambda &lt;- 0.2
+poplutaion.count &lt;- 1000
+subsample.count &lt;- 1000
+subsample.size &lt;- 40
+vals &lt;- data.frame(X = rexp(poplutaion.count,lambda));
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="300" height="300" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Check the Central Limit Theorem</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Give a set of parameters the application will generate a histogram of means of 
+subsets of the data and will super-impose the CLT predicted normal curve and a 
+normal curve fit to the distribution of the sample means for graphical comparison.
+Don&#39;t take my word for it, <a href="https://jonathanhines-coursera.shinyapps.io/project/">try it for yourself</a>!</p>
+
+<p><img src="assets/fig/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="380" height="380" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='The Central Limit Theorum is Fun!'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Seeing is Believeing'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Build a Polulation'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Check the Central Limit Theorem'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
